@@ -1,12 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { CustomCursor } from "@/components/CustomCursor";
+import { ParticleBackground } from "@/components/ParticleBackground";
+import { Navigation } from "@/components/Navigation";
+import { Hero3D } from "@/components/Hero3D";
+import { AboutSection } from "@/components/AboutSection";
+import { SkillsSection } from "@/components/SkillsSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { ContactSection } from "@/components/ContactSection";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="relative min-h-screen bg-background overflow-x-hidden" id="home">
+      <CustomCursor />
+      <ParticleBackground />
+      <Navigation />
+      
+      <main>
+        <Hero3D />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
+
+      <footer className="relative z-10 py-8 text-center border-t border-border/30">
+        <p className="text-muted-foreground">
+          © 2024 Shivam Patil. Built with React, Three.js & Framer Motion
+        </p>
+      </footer>
     </div>
   );
 };
