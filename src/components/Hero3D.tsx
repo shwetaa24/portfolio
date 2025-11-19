@@ -56,7 +56,7 @@ export const Hero3D = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="text-6xl md:text-8xl font-bold mb-6 text-glow">
-            Shivam Patil
+            Shweta Jadhav
           </h1>
           <p className="text-2xl md:text-4xl mb-4 bg-gradient-to-r from-neon-cyan to-neon-purple bg-clip-text text-transparent font-semibold">
             DevOps Engineer & Cloud Architect
@@ -85,7 +85,7 @@ export const Hero3D = () => {
 
           <div className="flex gap-6 justify-center">
             <motion.a
-              href="https://github.com"
+              href="https://github.com/shwetaa24"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.2, rotate: 5 }}
@@ -95,7 +95,7 @@ export const Hero3D = () => {
               <Github className="h-7 w-7" />
             </motion.a>
             <motion.a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/shweta-jadhav-3aa652361/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.2, rotate: 5 }}
@@ -105,7 +105,7 @@ export const Hero3D = () => {
               <Linkedin className="h-7 w-7" />
             </motion.a>
             <motion.a
-              href="mailto:shivam@example.com"
+              href="mailto:shwetajadhav2324@gmail.com"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
               className="text-foreground hover:text-neon-cyan transition-colors duration-300"

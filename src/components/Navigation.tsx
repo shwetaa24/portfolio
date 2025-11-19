@@ -36,7 +36,7 @@ export const Navigation = () => {
             className="text-2xl font-bold text-glow"
             whileHover={{ scale: 1.05 }}
           >
-            SP
+            SJ
           </motion.a>
 
           <div className="hidden md:flex items-center gap-8">

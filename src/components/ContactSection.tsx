@@ -32,19 +32,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "shivam.patil@example.com",
-    href: "mailto:shivam.patil@example.com",
+    value: "shwetajadhav2324@gmail.com",
+    href: "mailto:shwetajadhav2324@gmail.com",
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "+91 7218834640",
+    href: "tel:+917218834640",
   },
   {
     icon: MapPin,
     label: "Location",
-    value: "San Francisco, CA",
+    value: "Kolhapur, Maharashtra",
     href: "#",
   },
 ];
