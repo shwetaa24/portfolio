@@ -98,7 +98,7 @@ export const ContactSection = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your.email@example.com"
+                  placeholder="shwetajadhav2324@gmail.com"
                   className="glass-effect border-primary/20 focus:border-primary"
                 />
               </div>
