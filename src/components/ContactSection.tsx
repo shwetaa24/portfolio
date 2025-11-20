@@ -6,6 +6,8 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const GlobeModel = () => {
   return (
@@ -50,13 +52,18 @@ const contactInfo = [
 ];
 
 export const ContactSection = () => {
+  const isMobile = useIsMobile();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section id="contact" className="relative py-20 px-4 overflow-hidden" ref={ref}>
+    <section
+      id="contact"
+      className="relative py-20 px-4 overflow-hidden md:px-6 lg:px-12"
+      ref={ref}
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -72,13 +79,22 @@ export const ContactSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div
+          className={cn(
+            "grid grid-cols-1 gap-10 items-stretch",
+            "lg:grid-cols-2 lg:gap-12"
+          )}
+        >
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-effect p-8 rounded-2xl"
+            className={cn(
+              "glass-effect p-8 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.45)]",
+              "lg:order-1",
+              isMobile ? "order-2 px-6 py-6" : "order-1"
+            )}
           >
             <form className="space-y-6">
               <div>
@@ -122,15 +138,21 @@ export const ContactSection = () => {
               </Button>
             </form>
 
-            <div className="mt-8 space-y-4">
+            <div
+              className={cn(
+                "mt-8 grid gap-4",
+                "sm:grid-cols-2",
+                isMobile && "grid-cols-1"
+              )}
+            >
               {contactInfo.map((info) => (
                 <motion.a
                   key={info.label}
                   href={info.href}
                   whileHover={{ x: 5 }}
-                  className="flex items-center gap-4 text-muted-foreground hover:text-neon-cyan transition-colors duration-300"
+                  className="flex items-center gap-4 rounded-2xl border border-white/5 p-4 text-muted-foreground transition-colors duration-300 hover:border-neon-cyan/40 hover:text-neon-cyan"
                 >
-                  <div className="p-3 bg-primary/10 rounded-xl">
+                  <div className="rounded-xl bg-primary/10 p-3">
                     <info.icon className="h-5 w-5 text-neon-cyan" />
                   </div>
                   <div>
@@ -147,13 +169,17 @@ export const ContactSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="h-[500px] relative"
+            className={cn(
+              "relative w-full",
+              "lg:order-2",
+              isMobile ? "order-1 h-[320px]" : "h-[420px] lg:h-[520px]"
+            )}
           >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden rounded-2xl border border-white/10">
               <GlobeModel />
             </div>
             {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-radial from-neon-cyan/20 to-transparent blur-3xl pointer-events-none" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-radial from-neon-cyan/20 to-transparent blur-3xl" />
           </motion.div>
         </div>
       </div>

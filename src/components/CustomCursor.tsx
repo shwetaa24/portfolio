@@ -42,9 +42,9 @@ export const CustomCursor = () => {
         }}
         transition={{
           type: "spring",
-          damping: 30,
-          stiffness: 500,
-          mass: 0.5,
+          damping: 20,
+          stiffness: 1000,
+          mass: 0.40,
         }}
       />
       
@@ -61,9 +61,9 @@ export const CustomCursor = () => {
         }}
         transition={{
           type: "spring",
-          damping: 20,
-          stiffness: 300,
-          mass: 0.5,
+          damping: 16,
+          stiffness: 650,
+          mass: 0.4,
         }}
       />
       
@@ -77,9 +77,9 @@ export const CustomCursor = () => {
         }}
         transition={{
           type: "spring",
-          damping: 25,
-          stiffness: 200,
-          mass: 0.8,
+          damping: 20,
+          stiffness: 450,
+          mass: 0.55,
         }}
       />
     </>
