@@ -1,3 +1,4 @@
+import { useState, type FormEvent, type ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Canvas } from "@react-three/fiber";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 const GlobeModel = () => {
@@ -52,11 +54,74 @@ const contactInfo = [
 ];
 
 export const ContactSection = () => {
+  const { toast } = useToast();
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const isMobile = useIsMobile();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!formValues.name || !formValues.email || !formValues.message) {
+      toast({
+        title: "Missing information",
+        description: "Please fill out every field before sending your message.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/shwetajadhav2324@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formValues.name,
+          email: formValues.email,
+          message: formValues.message,
+          _subject: "New portfolio inquiry",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setFormValues({ name: "", email: "", message: "" });
+      toast({
+        title: "Message sent",
+        description: "Thanks! Your message is on its way to my inbox.",
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Something went wrong",
+        description: "I couldn't send your message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -96,14 +161,18 @@ export const ContactSection = () => {
               isMobile ? "order-2 px-6 py-6" : "order-1"
             )}
           >
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
                   Name
                 </label>
                 <Input
                   id="name"
+                  name="name"
                   placeholder="Your name"
+                  value={formValues.name}
+                  onChange={handleChange}
+                  required
                   className="glass-effect border-primary/20 focus:border-primary"
                 />
               </div>
@@ -114,7 +183,11 @@ export const ContactSection = () => {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="shwetajadhav2324@gmail.com"
+                  value={formValues.email}
+                  onChange={handleChange}
+                  required
                   className="glass-effect border-primary/20 focus:border-primary"
                 />
               </div>
@@ -124,17 +197,22 @@ export const ContactSection = () => {
                 </label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Tell me about your project..."
                   rows={5}
+                  value={formValues.message}
+                  onChange={handleChange}
+                  required
                   className="glass-effect border-primary/20 focus:border-primary resize-none"
                 />
               </div>
               <Button
                 type="submit"
                 size="lg"
+                disabled={isSubmitting}
                 className="w-full box-glow bg-primary hover:bg-primary/90 font-semibold"
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
 
