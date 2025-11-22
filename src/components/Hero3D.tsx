@@ -3,6 +3,7 @@ import { OrbitControls, Float, MeshDistortMaterial, Sphere, Torus, Box } from "@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const FloatingObjects = () => {
   return (
@@ -67,20 +68,33 @@ export const Hero3D = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-8">
-            <Button
-              size="lg"
-              className="box-glow bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all duration-300 hover:scale-105"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Download className="mr-2 h-5 w-5" />
-              Download Resume
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="glass-effect border-primary text-foreground hover:bg-primary/10 transition-all duration-300 hover:scale-105"
+              <Link to="/resume">
+                <Button
+                  size="lg"
+                  className="box-glow bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all duration-300"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  View Resume
+                </Button>
+              </Link>
+            </motion.div>
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              View Projects
-            </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="glass-effect border-primary text-foreground hover:bg-primary/10 transition-all duration-300 hover:scale-105"
+              >
+                View Projects
+              </Button>
+            </motion.a>
           </div>
 
           <div className="flex gap-6 justify-center">
