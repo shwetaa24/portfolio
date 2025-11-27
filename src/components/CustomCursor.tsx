@@ -4,32 +4,34 @@ import { motion } from "framer-motion";
 export const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
     };
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    // NEW LOGIC: Detects hover on ANY button dynamically
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      // Check if the element we are over is a button, link, or inside one
+      const isInteractive = 
+        target.matches("a, button, [role='button'], input") ||
+        target.closest("a, button, [role='button']");
+
+      setIsHovering(!!isInteractive);
+    };
 
     window.addEventListener("mousemove", updatePosition);
-
-    // Add hover detection for interactive elements
-    const interactiveElements = document.querySelectorAll("a, button, [role='button']");
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnter);
-      el.addEventListener("mouseleave", handleMouseLeave);
-    });
+    window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
       window.removeEventListener("mousemove", updatePosition);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnter);
-        el.removeEventListener("mouseleave", handleMouseLeave);
-      });
+      window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <>
@@ -39,6 +41,7 @@ export const CustomCursor = () => {
         animate={{
           x: position.x - 4,
           y: position.y - 4,
+          opacity: isVisible ? 1 : 0, // Hides cursor until you move mouse
         }}
         transition={{
           type: "spring",
@@ -57,7 +60,8 @@ export const CustomCursor = () => {
         animate={{
           x: position.x - 16,
           y: position.y - 16,
-          scale: isHovering ? 1.5 : 1,
+          scale: isHovering ? 1.5 : 1, // Will now expand on your Project buttons!
+          opacity: isVisible ? 1 : 0,
         }}
         transition={{
           type: "spring",
@@ -74,6 +78,7 @@ export const CustomCursor = () => {
           x: position.x - 32,
           y: position.y - 32,
           scale: isHovering ? 1.2 : 1,
+          opacity: isVisible ? 0.2 : 0,
         }}
         transition={{
           type: "spring",
